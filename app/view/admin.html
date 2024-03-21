@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="./../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="./../../node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="text-center">
+            <img src="assets/images/cybersoft.png" alt="Card image" />
+          </div>
+
+          <div class="card-body">
+            <h4 class="card-title text-center">
+              Quan ly Hoc Vien Nghien Cuu va Giang Day
+            </h4>
+          </div>
+        </div>
+        <hr />
+      </div>
+
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="d-flex">
+          <div class="">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <button class="nav-link active" id="customer-tab" data-bs-toggle="tab"
+                  data-bs-target="#customer-tab-pane" type="button" role="tab">Customer</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="employee-tab" data-bs-toggle="tab" data-bs-target="#employee-tab-pane"
+                  type="button" role="tab">Employee</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="student-tab" data-bs-toggle="tab" data-bs-target="#student-tab-pane"
+                  type="button" role="tab">Student</button>
+              </li>
+
+            </ul>
+          </div>
+          <div id="addBtn" class="ms-auto">
+
+          </div>
+        </div>
+
+
+        <div class="tab-content" id="list-person">
+          <div class="tab-pane fade show active" id="customer-tab-pane" role="tabpanel" tabindex="0">Customer
+          </div>
+          <div class="tab-pane fade" id="employee-tab-pane" role="tabpanel" tabindex="0">Employee</div>
+          <div class="tab-pane fade" id="student-tab-pane" role="tabpanel" tabindex="0">Student</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ? Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thêm Món Ăn</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="needs-validation" id="foodForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="foodID">Mã Món</label>
+                <input type="text" disabled class="form-control" id="foodID" placeholder="Nhập ID" value="" required />
+                <div id="invalidID" class="invalid-feedback"></div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="tenMon">Tên Món</label>
+                <input type="text" class="form-control" id="tenMon" placeholder="Nhập tên món" required />
+                <div id="invalidTen" class="invalid-form"></div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="loai">Loại Món</label>
+                <select class="custom-select d-block w-100" id="loai" required>
+                  <option value="">Chọn loại</option>
+                  <option value="loai1">Chay</option>
+                  <option value="loai2">Mặn</option>
+                </select>
+                <div id="invalidLoai" class="invalid-feedback"></div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="giaMon">Giá Món</label>
+                <input type="text" class="form-control" id="giaMon" placeholder="Nhập giá" value="" required />
+                <div id="invalidGia" class="invalid-feedback"></div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="khuyenMai">Khuyến Mãi (%)</label>
+                <select class="custom-select d-block w-100" id="khuyenMai" required>
+                  <option value="">Chọn khuyến mãi</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                </select>
+                <div id="invalidKM" class="invalid-feedback"></div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="tinhTrang">Tình Trạng</label>
+                <select class="custom-select d-block w-100" id="tinhTrang" required>
+                  <option value="">Chọn tình trạng</option>
+                  <option value="0">Hết</option>
+                  <option value="1">Còn</option>
+                </select>
+                <div id="invalidTT" class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="form-group">
+                <label for="hinhMon">Hình Món Ăn</label>
+                <input type="text" class="form-control" id="hinhMon" placeholder="Nhập hình ảnh" value="" required />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="moTa">Mô Tả</label>
+              <textarea class="form-control" id="moTa" rows="3"></textarea>
+              <div id="invalidMoTa" class="invalid-form"></div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-warning" id="btnCapNhat">
+            Cập Nhật
+          </button>
+          <button type="button" class="btn btn-warning" id="btnThemMon">
+            Thêm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./../../node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./../../node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+  <script src="./../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"
+    integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="module" src="../controller/main.js"></script>
+
+</body>
+
+</html>
