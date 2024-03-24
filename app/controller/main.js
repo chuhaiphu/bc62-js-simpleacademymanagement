@@ -144,6 +144,9 @@ window.updateCustomerInfo = (customerCode) => {
         document.getElementById('customer-diaChi').value = customer.diaChi;
         document.getElementById('customer-triGiaHoaDon').value = customer.triGiaHoaDon;
     }
+    document.querySelectorAll('#addCustomerModal .invalid-msg').forEach(msg => {
+        msg.style.display = 'none';
+    });
 };
 
 window.deleteCustomer = async (customerCode) => {
@@ -290,6 +293,9 @@ window.updateEmployeeInfo = (employeeCode) => {
         document.getElementById('employee-luongTheoNgay').value = employee.luongTheoNgay;
         document.getElementById('employee-soNgayLamViec').value = employee.soNgayLamViec;
     }
+    document.querySelectorAll('#addEmployeeModal .invalid-msg').forEach(msg => {
+        msg.style.display = 'none';
+    });
 };
 
 window.deleteEmployee = async (employeeCode) => {
@@ -440,6 +446,10 @@ window.updateStudentInfo = (studentCode) => {
         document.getElementById('student-diemLy').value = student.diemLy;
         document.getElementById('student-diemHoa').value = student.diemHoa;
     }
+
+    document.querySelectorAll('#addStudentModal .invalid-msg').forEach(msg => {
+        msg.style.display = 'none';
+    });
 };
 
 window.deleteStudent = async (studentCode) => {
