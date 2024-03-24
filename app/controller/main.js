@@ -1,7 +1,11 @@
-import Customer from "../model/customer.js";
 import PersonService from "../service/personService.js";
-import CustomerValidation from '../config/validation.js';
+import Customer from "../model/customer.js";
+import Employee from "../model/employee.js";
+import Student from "../model/student.js";
+import { CustomerValidation, EmployeeValidation, StudentValidation } from '../config/validation.js';
 import CustomAlert from '../utils/alert.js';
+
+
 
 document.querySelectorAll(".nav-link").forEach(button => {
     button.addEventListener("click", () => {
@@ -18,7 +22,7 @@ const renderButtonAdd = (type) => {
         <button 
         id="btnThemCustomer" 
         type="button" 
-        onclick="resetForm()"
+        onclick="resetCustomerForm()"
         class="btn btn-warning btn-hover mb-3 text-white d-flex align-items-center" 
         data-bs-toggle="modal" 
         data-bs-target="#addCustomerModal"
@@ -35,7 +39,7 @@ const renderButtonAdd = (type) => {
         <button 
         id="btnThemEmployee" 
         type="button"
-        onclick="resetForm()"
+        onclick="resetEmployeeForm()"
         class="btn btn-warning btn-hover mb-3 text-white d-flex align-items-center" 
         data-bs-toggle="modal" 
         data-bs-target="#addEmployeeModal"
@@ -51,7 +55,7 @@ const renderButtonAdd = (type) => {
         <button 
         id="btnThemStudent" 
         type="button" 
-        onclick="resetForm()"
+        onclick="resetStudentForm()"
         class="btn btn-warning btn-hover mb-3 text-white d-flex align-items-center" 
         data-bs-toggle="modal" 
         data-bs-target="#addStudentModal"
@@ -100,51 +104,51 @@ window.onload = function() {
 
 const customerValidator = new CustomerValidation();
 let submitValidation = true;
-let email = document.getElementById('email');
-let code = document.getElementById('code');
-let hoTen = document.getElementById('hoTen');
-let diaChi = document.getElementById('diaChi');
-let tenCongTy = document.getElementById('tenCongTy');
-let triGiaHoaDon = document.getElementById('triGiaHoaDon');
+let customerEmail = document.getElementById('customer-email');
+let customerCode = document.getElementById('customer-code');
+let customerHoTen = document.getElementById('customer-hoTen');
+let customerDiaChi = document.getElementById('customer-diaChi');
+let customerTenCongTy = document.getElementById('customer-tenCongTy');
+let customerTriGiaHoaDon = document.getElementById('customer-triGiaHoaDon');
 
-email.oninput = function () {
+customerEmail.oninput = function () {
     submitValidation &= customerValidator.validateEmail();
 }
-code.oninput = function () {
+customerCode.oninput = function () {
     submitValidation &= customerValidator.validateCustomerCode();
 }
-hoTen.oninput = function () {
+customerHoTen.oninput = function () {
     submitValidation &= customerValidator.validateHoTen();
 }
-diaChi.oninput = function () {
+customerDiaChi.oninput = function () {
     submitValidation &= customerValidator.validateDiaChi();
 }
-tenCongTy.oninput = function () {
+customerTenCongTy.oninput = function () {
     submitValidation &= customerValidator.validateTenCongTy();
 }
-triGiaHoaDon.oninput = function () {
+customerTriGiaHoaDon.oninput = function () {
     submitValidation &= customerValidator.validateTriGiaHoaDon();
 }
 
 window.updateCustomerInfo = (customerCode) => {
     const customer = personService.listPersons.find(customer => customer.code === customerCode);
     if (customer) {
-        document.getElementById("btnUpdate").style.display = "inline-block";
-        document.getElementById("btnAdd").style.display = "none";
+        document.getElementById("btnUpdateCustomer").style.display = "inline-block";
+        document.getElementById("btnAddCustomer").style.display = "none";
 
-        document.getElementById('code').value = customer.code;
-        document.getElementById('code').disabled = true;
-        document.getElementById('email').value = customer.email;
-        document.getElementById('hoTen').value = customer.hoTen;
-        document.getElementById('tenCongTy').value = customer.tenCongTy;
-        document.getElementById('diaChi').value = customer.diaChi;
-        document.getElementById('triGiaHoaDon').value = customer.triGiaHoaDon;
+        document.getElementById('customer-code').value = customer.code;
+        document.getElementById('customer-code').disabled = true;
+        document.getElementById('customer-email').value = customer.email;
+        document.getElementById('customer-hoTen').value = customer.hoTen;
+        document.getElementById('customer-tenCongTy').value = customer.tenCongTy;
+        document.getElementById('customer-diaChi').value = customer.diaChi;
+        document.getElementById('customer-triGiaHoaDon').value = customer.triGiaHoaDon;
     }
 };
 
 window.deleteCustomer = async (customerCode) => {
     let promptMsg = await CustomAlert.alertDelete(
-        `This phone will be deleted, you can't undo this action`
+        `This customer will be deleted, you can't undo this action`
     );
     if (promptMsg.isConfirmed){
         personService.deletePersonByCode(customerCode);
@@ -153,25 +157,25 @@ window.deleteCustomer = async (customerCode) => {
     }
 };
 
-document.getElementById("btnAdd").addEventListener('click', function(event) {
+document.getElementById("btnAddCustomer").addEventListener('click', function(event) {
     event.preventDefault(); // Prevent form submission if needed
     submitValidation = customerValidator.initialValidation();
     console.log(submitValidation);
     if (!submitValidation) return;
     // Get form values
     const form = document.getElementById('customerForm');
-    const code = form.elements.code.value;
+    const code = form.elements['customer-code'].value;
     if (personService.listPersons.find(customer => customer.code === code)) {
-        document.getElementById("invalid-code").innerHTML = "Mã khách hàng đã tồn tại";
-        document.getElementById("invalid-code").style.display = 'block';
+        document.getElementById("invalid-customer-code").innerHTML = "Mã người này đã tồn tại";
+        document.getElementById("invalid-customer-code").style.display = 'block';
         return;
     }
-    const email = form.elements.email.value;
-    const hoTen = form.elements.hoTen.value;
-    const diaChi = form.elements.diaChi.value;
-    const tenCongTy = form.elements.tenCongTy.value;
-    const triGiaHoaDon = form.elements.triGiaHoaDon.value;
-    const danhGia = form.elements.danhGia.value;
+    const email = form.elements['customer-email'].value;
+    const hoTen = form.elements['customer-hoTen'].value;
+    const diaChi = form.elements['customer-diaChi'].value;
+    const tenCongTy = form.elements['customer-tenCongTy'].value;
+    const triGiaHoaDon = form.elements['customer-triGiaHoaDon'].value;
+    const danhGia = document.querySelector('#customer-danhGia input[name="danhGia"]:checked').value;
 
     // * Create new customer
     const newCustomer = new Customer(code, email, hoTen, diaChi, tenCongTy, triGiaHoaDon, danhGia);
@@ -180,19 +184,19 @@ document.getElementById("btnAdd").addEventListener('click', function(event) {
     renderCustomers();
 });
 
-document.getElementById("btnUpdate").addEventListener('click', function(event) {
+document.getElementById("btnUpdateCustomer").addEventListener('click', function(event) {
     event.preventDefault(); // Prevent form submission if needed
     submitValidation = customerValidator.initialValidation();
     console.log(submitValidation);
     if (!submitValidation) return;
     const form = document.getElementById('customerForm');
-    const code = form.elements.code.value;
-    const email = form.elements.email.value;
-    const hoTen = form.elements.hoTen.value;
-    const diaChi = form.elements.diaChi.value;
-    const tenCongTy = form.elements.tenCongTy.value;
-    const triGiaHoaDon = form.elements.triGiaHoaDon.value;
-    const danhGia = form.elements.danhGia.value;
+    const code = form.elements['customer-code'].value;
+    const email = form.elements['customer-email'].value;
+    const hoTen = form.elements['customer-hoTen'].value;
+    const diaChi = form.elements['customer-diaChi'].value;
+    const tenCongTy = form.elements['customer-tenCongTy'].value;
+    const triGiaHoaDon = form.elements['customer-triGiaHoaDon'].value;
+    const danhGia = document.querySelector('#customer-danhGia input[name="danhGia"]:checked').value;
 
     // * Update existed Customer base on new Customer Info
     const newCustomerInfo = new Customer(code, email, hoTen, diaChi, tenCongTy, triGiaHoaDon, danhGia);
@@ -201,13 +205,311 @@ document.getElementById("btnUpdate").addEventListener('click', function(event) {
     renderCustomers();
 });
 
-window.resetForm = () => {
-    document.getElementById("btnAdd").style.display = "inline-block";
-    document.getElementById("btnUpdate").style.display = "none";
-    document.getElementById('code').value = "";
-    document.getElementById('code').disabled = false;
-    document.getElementById('email').value = "";
-    document.getElementById('hoTen').value = "";
-    document.getElementById('tenCongTy').value = "";
-    document.getElementById('diaChi').value = "";
+window.resetCustomerForm = () => {
+    document.getElementById("btnAddCustomer").style.display = "inline-block";
+    document.getElementById("btnUpdateCustomer").style.display = "none";
+    document.getElementById('customer-code').value = "";
+    document.getElementById('customer-code').disabled = false;
+    document.getElementById('customer-email').value = "";
+    document.getElementById('customer-hoTen').value = "";
+    document.getElementById('customer-tenCongTy').value = "";
+    document.getElementById('customer-diaChi').value = "";
+}
+
+
+// !! EMPLOYEE MANAGEMENT
+const renderEmployees = () => {
+    const employees = personService.filterPersons(Employee);
+    const employeesHTML = employees.map((employee) => {
+        return `
+        <tr>
+            <td>${employee.code}</td>
+            <td>${employee.email}</td>
+            <td>${employee.hoTen}</td>
+            <td>${employee.diaChi}</td>
+            <td>${employee.calculateSalary()}</td>
+            <td class="d-flex">
+                <div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal" onclick="updateEmployeeInfo('${employee.code}')">
+                        <i class="fa fa-wrench"></i>
+                    </button>
+                </div>
+                <div><button class="btn btn-danger ms-2" onclick="deleteEmployee('${employee.code}')"><i class="fa fa-trash"></i></button></div>
+            </td>
+        </tr>
+        `;
+    })
+    
+    // Append the generated HTML to the table body
+    document.querySelector('#employeeTableContent tbody').innerHTML = employeesHTML;
+};
+
+document.getElementById("employee-tab").addEventListener('click', function(event) {
+    renderEmployees();
+});
+
+const employeeValidator = new EmployeeValidation();
+let employeeSubmitValidation = true;
+let employeeEmail = document.getElementById('employee-email');
+let employeeCode = document.getElementById('employee-code');
+let employeeHoTen = document.getElementById('employee-hoTen');
+let employeeDiaChi = document.getElementById('employee-diaChi');
+let employeeLuongTheoNgay = document.getElementById('employee-luongTheoNgay');
+let employeeSoNgayLamViec = document.getElementById('employee-soNgayLamViec');
+
+employeeEmail.oninput = function () {
+    employeeSubmitValidation &= employeeValidator.validateEmail();
+}
+employeeCode.oninput = function () {
+    employeeSubmitValidation &= employeeValidator.validateEmployeeCode();
+}
+employeeHoTen.oninput = function () {
+    employeeSubmitValidation &= employeeValidator.validateHoTen();
+}
+employeeDiaChi.oninput = function () {
+    employeeSubmitValidation &= employeeValidator.validateDiaChi();
+}
+employeeLuongTheoNgay.oninput = function () {
+    employeeSubmitValidation &= employeeValidator.validateLuongTheoNgay();
+}
+employeeSoNgayLamViec.oninput = function () {
+    employeeSubmitValidation &= employeeValidator.validateSoNgayLamViec();
+}
+
+window.updateEmployeeInfo = (employeeCode) => {
+    const employee = personService.listPersons.find(employee => employee.code === employeeCode);
+    if (employee) {
+        document.getElementById("btnUpdateEmployee").style.display = "inline-block";
+        document.getElementById("btnAddEmployee").style.display = "none";
+
+        document.getElementById('employee-code').value = employee.code;
+        document.getElementById('employee-code').disabled = true;
+        document.getElementById('employee-email').value = employee.email;
+        document.getElementById('employee-hoTen').value = employee.hoTen;
+        document.getElementById('employee-tenCongTy').value = employee.tenCongTy;
+        document.getElementById('employee-diaChi').value = employee.diaChi;
+        document.getElementById('employee-triGiaHoaDon').value = employee.triGiaHoaDon;
+    }
+};
+
+window.deleteEmployee = async (employeeCode) => {
+    let promptMsg = await CustomAlert.alertDelete(
+        `This employee will be deleted, you can't undo this action`
+    );
+    if (promptMsg.isConfirmed){
+        personService.deletePersonByCode(employeeCode);
+        renderEmployees();
+        CustomAlert.alertSuccess(`Employee deleted successfully!`);
+    }
+};
+
+document.getElementById("btnAddEmployee").addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission if needed
+    employeeSubmitValidation = employeeValidator.initialValidation();
+    console.log(employeeSubmitValidation);
+    if (!employeeSubmitValidation) return;
+    // Get form values
+    const form = document.getElementById('employeeForm');
+    const code = form.elements['employee-code'].value;
+    if (personService.listPersons.find(employee => employee.code === code)) {
+        document.getElementById("invalid-employee-code").innerHTML = "Mã người này đã tồn tại";
+        document.getElementById("invalid-employee-code").style.display = 'block';
+        return;
+    }
+    const email = form.elements['employee-email'].value;
+    const hoTen = form.elements['employee-hoTen'].value;
+    const diaChi = form.elements['employee-diaChi'].value;
+    const luongTheoNgay = form.elements['employee-luongTheoNgay'].value;
+    const soNgayLamViec = form.elements['employee-soNgayLamViec'].value;
+
+    // * Create new customer
+    const newEmployee = new Employee(code, email, hoTen, diaChi, soNgayLamViec, luongTheoNgay);
+    personService.addPerson(newEmployee);
+    CustomAlert.alertSuccess(`Employee added successfully!`);
+    renderEmployees();
+});
+
+document.getElementById("btnUpdateEmployee").addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission if needed
+    submitValidation = employeeValidator.initialValidation();
+    console.log(submitValidation);
+    if (!submitValidation) return;
+    const form = document.getElementById('employeeForm');
+    const code = form.elements['employee-code'].value;
+    const email = form.elements['employee-email'].value;
+    const hoTen = form.elements['employee-hoTen'].value;
+    const diaChi = form.elements['employee-diaChi'].value;
+    const luongTheoNgay = form.elements['employee-luongTheoNgay'].value;
+    const soNgayLamViec = form.elements['employee-soNgayLamViec'].value;
+
+    // * Update existed Customer base on new Customer Info
+    const newEmployeeInfo = new Employee(code, email, hoTen, diaChi, soNgayLamViec, luongTheoNgay);
+    personService.updatePerson(code, newEmployeeInfo);
+    CustomAlert.alertSuccess(`Employee updated successfully!`);
+    renderEmployees();
+});
+
+window.resetEmployeeForm = () => {
+    document.getElementById("btnAddEmployee").style.display = "inline-block";
+    document.getElementById("btnUpdateEmployee").style.display = "none";
+    document.getElementById('employee-code').value = "";
+    document.getElementById('employee-code').disabled = false;
+    document.getElementById('employee-email').value = "";
+    document.getElementById('employee-hoTen').value = "";
+    document.getElementById('employee-diaChi').value = "";
+    document.getElementById('employee-luongTheoNgay').value = "";
+    document.getElementById('employee-soNgayLamViec').value = "";
+}
+
+
+// !! STUDENT MANAGEMENT
+const renderStudents = () => {
+    const students = personService.filterPersons(Student);
+    const studentsHTML = students.map((student) => {
+        return `
+        <tr>
+            <td>${student.code}</td>
+            <td>${student.email}</td>
+            <td>${student.hoTen}</td>
+            <td>${student.diaChi}</td>
+            <td>${student.calculateDiemTrungBinh()}</td>
+            <td class="d-flex">
+                <div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal" onclick="updateStudentInfo('${student.code}')">
+                        <i class="fa fa-wrench"></i>
+                    </button>
+                </div>
+                <div><button class="btn btn-danger ms-2" onclick="deleteStudent('${student.code}')"><i class="fa fa-trash"></i></button></div>
+            </td>
+        </tr>
+        `;
+    })
+    
+    // Append the generated HTML to the table body
+    document.querySelector('#studentTableContent tbody').innerHTML = studentsHTML;
+};
+
+document.getElementById("student-tab").addEventListener('click', function(event) {
+    renderStudents();
+});
+
+const studentValidator = new StudentValidation();
+let studentSubmitValidation = true;
+let studentEmail = document.getElementById('student-email');
+let studentCode = document.getElementById('student-code');
+let studentHoTen = document.getElementById('student-hoTen');
+let studentDiaChi = document.getElementById('student-diaChi');
+let studentDiemToan = document.getElementById('student-diemToan');
+let studentDiemLy = document.getElementById('student-diemLy');
+let studentDiemHoa = document.getElementById('student-diemHoa');
+
+studentEmail.oninput = function () {
+    studentSubmitValidation &= studentValidator.validateEmail();
+}
+studentCode.oninput = function () {
+    studentSubmitValidation &= studentValidator.validateStudentCode();
+}
+studentHoTen.oninput = function () {
+    studentSubmitValidation &= studentValidator.validateHoTen();
+}
+studentDiaChi.oninput = function () {
+    studentSubmitValidation &= studentValidator.validateDiaChi();
+}
+studentDiemToan.oninput = function () {
+    studentSubmitValidation &= studentValidator.validateDiemToan();
+}
+studentDiemLy.oninput = function () {
+    studentSubmitValidation &= studentValidator.validateDiemLy();
+}
+studentDiemHoa.oninput = function () {
+    studentSubmitValidation &= studentValidator.validateDiemHoa();
+}
+
+window.updateStudentInfo = (studentCode) => {
+    const student = personService.listPersons.find(student => student.code === studentCode);
+    if (student) {
+        document.getElementById("btnUpdateStudent").style.display = "inline-block";
+        document.getElementById("btnAddStudent").style.display = "none";
+
+        document.getElementById('student-code').value = student.code;
+        document.getElementById('student-code').disabled = true;
+        document.getElementById('student-email').value = student.email;
+        document.getElementById('student-hoTen').value = student.hoTen;
+        document.getElementById('student-diaChi').value = student.diaChi;
+        document.getElementById('student-diemToan').value = student.diemToan;
+        document.getElementById('student-diemLy').value = student.diemLy;
+        document.getElementById('student-diemHoa').value = student.diemHoa;
+    }
+};
+
+window.deleteStudent = async (studentCode) => {
+    let promptMsg = await CustomAlert.alertDelete(
+        `This student will be deleted, you can't undo this action`
+    );
+    if (promptMsg.isConfirmed){
+        personService.deletePersonByCode(studentCode);
+        renderStudents();
+        CustomAlert.alertSuccess(`Student deleted successfully!`);
+    }
+};
+
+document.getElementById("btnAddStudent").addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission if needed
+    studentSubmitValidation = studentValidator.initialValidation();
+    console.log(studentSubmitValidation);
+    if (!studentSubmitValidation) return;
+    // Get form values
+    const form = document.getElementById('studentForm');
+    const code = form.elements['student-code'].value;
+    if (personService.listPersons.find(student => student.code === code)) {
+        document.getElementById("invalid-student-code").innerHTML = "Mã người này đã tồn tại";
+        document.getElementById("invalid-student-code").style.display = 'block';
+        return;
+    }
+    const email = form.elements['student-email'].value;
+    const hoTen = form.elements['student-hoTen'].value;
+    const diaChi = form.elements['student-diaChi'].value;
+    const diemToan = form.elements['student-diemToan'].value;
+    const diemLy = form.elements['student-diemLy'].value;
+    const diemHoa = form.elements['student-diemHoa'].value;
+
+    // * Create new customer
+    const newStudent = new Student(code, email, hoTen, diaChi, diemToan, diemLy, diemHoa);
+    personService.addPerson(newStudent);
+    CustomAlert.alertSuccess(`Student added successfully!`);
+    renderStudents();
+});
+
+document.getElementById("btnUpdateStudent").addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission if needed
+    submitValidation = studentValidator.initialValidation();
+    console.log(submitValidation);
+    if (!submitValidation) return;
+    const form = document.getElementById('studentForm');
+    const code = form.elements['student-code'].value;
+    const email = form.elements['student-email'].value;
+    const hoTen = form.elements['student-hoTen'].value;
+    const diaChi = form.elements['student-diaChi'].value;
+    const diemToan = form.elements['student-diemToan'].value;
+    const diemLy = form.elements['student-diemLy'].value;
+    const diemHoa = form.elements['student-diemHoa'].value;
+
+    // * Update existed Customer base on new Customer Info
+    const newStudentInfo = new Student(code, email, hoTen, diaChi, diemToan, diemLy, diemHoa);
+    personService.updatePerson(code, newStudentInfo);
+    CustomAlert.alertSuccess(`Student updated successfully!`);
+    renderStudents();
+});
+
+window.resetStudentForm = () => {
+    document.getElementById("btnAddStudent").style.display = "inline-block";
+    document.getElementById("btnUpdateStudent").style.display = "none";
+    document.getElementById('student-code').value = "";
+    document.getElementById('student-code').disabled = false;
+    document.getElementById('student-email').value = "";
+    document.getElementById('student-hoTen').value = "";
+    document.getElementById('student-diaChi').value = "";
+    document.getElementById('student-diemToan').value = "";
+    document.getElementById('student-diemLy').value = "";
+    document.getElementById('student-diemHoa').value = "";
 }

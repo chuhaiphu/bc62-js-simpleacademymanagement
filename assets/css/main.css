@@ -33,3 +33,13 @@
 .btn-hover:active {
     transform: scale(0.95);
 }
+
+.modal-title{
+    font-weight: bold;
+}
+
+
+.invalid-msg {
+    color: red;
+    font-style: italic;;
+}

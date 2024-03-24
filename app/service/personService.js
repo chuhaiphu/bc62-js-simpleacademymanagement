@@ -28,12 +28,13 @@ export default class personService {
     }
 
     sortPersons() {
-        this.listPersons.sort((a, b) => a.name.localeCompare(b.name));
+        this.listPersons.sort((a, b) => a.hoTen.localeCompare(b.hoTen));
         this.savePersonsToLocalStorage();
     }
 
     filterPersons(type) {
         this.loadPersonsFromLocalStorage();
+        this.sortPersons();
         return this.listPersons.filter(person => person.constructor.name === type.name);
     }
 
@@ -59,19 +60,19 @@ export default class personService {
                         );
                     case 'employee':
                         return new Employee(
-                            personData.hoTen,
-                            personData.diaChi,
                             personData.code,
                             personData.email,
+                            personData.hoTen,
+                            personData.diaChi,
                             personData.soNgayLamViec,
                             personData.luongTheoNgay
                         );
                     case 'student':
                         return new Student(
-                            personData.hoTen,
-                            personData.diaChi,
                             personData.code,
                             personData.email,
+                            personData.hoTen,
+                            personData.diaChi,
                             personData.diemToan,
                             personData.diemLy,
                             personData.diemHoa

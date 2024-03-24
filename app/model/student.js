@@ -9,7 +9,8 @@ export default class student extends person{
     }
 
     calculateDiemTrungBinh() {
-        return (this.diemToan + this.diemLy + this.diemHoa) / 3;
+        console.log(this.diemToan + this.diemLy + this.diemHoa);
+        return ((parseFloat(this.diemToan) + parseFloat(this.diemLy) + parseFloat(this.diemHoa)) / 3.0).toFixed(2);
     }
 
 }
