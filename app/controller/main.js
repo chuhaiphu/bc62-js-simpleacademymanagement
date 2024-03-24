@@ -184,6 +184,9 @@ document.getElementById("btnAddCustomer").addEventListener('click', function(eve
     const newCustomer = new Customer(code, email, hoTen, diaChi, tenCongTy, triGiaHoaDon, danhGia);
     personService.addPerson(newCustomer);
     CustomAlert.alertSuccess(`Customer added successfully!`);
+    const customerModal = document.getElementById('addCustomerModal');
+    const modal = bootstrap.Modal.getInstance(customerModal);
+    modal.hide();
     renderCustomers();
 });
 
@@ -205,6 +208,9 @@ document.getElementById("btnUpdateCustomer").addEventListener('click', function(
     const newCustomerInfo = new Customer(code, email, hoTen, diaChi, tenCongTy, triGiaHoaDon, danhGia);
     personService.updatePerson(code, newCustomerInfo);
     CustomAlert.alertSuccess(`Customer updated successfully!`);
+    const customerModal = document.getElementById('addCustomerModal');
+    const modal = bootstrap.Modal.getInstance(customerModal);
+    modal.hide();
     renderCustomers();
 });
 
@@ -332,6 +338,9 @@ document.getElementById("btnAddEmployee").addEventListener('click', function(eve
     const newEmployee = new Employee(code, email, hoTen, diaChi, soNgayLamViec, luongTheoNgay);
     personService.addPerson(newEmployee);
     CustomAlert.alertSuccess(`Employee added successfully!`);
+    const employeeModal = document.getElementById('addEmployeeModal');
+    const modal = bootstrap.Modal.getInstance(employeeModal);
+    modal.hide();
     renderEmployees();
 });
 
@@ -352,6 +361,9 @@ document.getElementById("btnUpdateEmployee").addEventListener('click', function(
     const newEmployeeInfo = new Employee(code, email, hoTen, diaChi, soNgayLamViec, luongTheoNgay);
     personService.updatePerson(code, newEmployeeInfo);
     CustomAlert.alertSuccess(`Employee updated successfully!`);
+    const employeeModal = document.getElementById('addEmployeeModal');
+    const modal = bootstrap.Modal.getInstance(employeeModal);
+    modal.hide();
     renderEmployees();
 });
 
@@ -487,6 +499,9 @@ document.getElementById("btnAddStudent").addEventListener('click', function(even
     const newStudent = new Student(code, email, hoTen, diaChi, diemToan, diemLy, diemHoa);
     personService.addPerson(newStudent);
     CustomAlert.alertSuccess(`Student added successfully!`);
+    const studentModal = document.getElementById('addStudentModal');
+    const modal = bootstrap.Modal.getInstance(studentModal);
+    modal.hide();
     renderStudents();
 });
 
@@ -508,6 +523,9 @@ document.getElementById("btnUpdateStudent").addEventListener('click', function(e
     const newStudentInfo = new Student(code, email, hoTen, diaChi, diemToan, diemLy, diemHoa);
     personService.updatePerson(code, newStudentInfo);
     CustomAlert.alertSuccess(`Student updated successfully!`);
+    const studentModal = document.getElementById('addStudentModal');
+    const modal = bootstrap.Modal.getInstance(studentModal);
+    modal.hide();
     renderStudents();
 });
 
