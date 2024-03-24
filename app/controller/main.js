@@ -92,7 +92,7 @@ const renderCustomers = () => {
             </td>
         </tr>
         `;
-    })
+    }).join('');
     
     // Append the generated HTML to the table body
     document.querySelector('#customerTableContent tbody').innerHTML = customersHTML;
@@ -223,6 +223,7 @@ window.resetCustomerForm = () => {
     document.getElementById('customer-hoTen').value = "";
     document.getElementById('customer-tenCongTy').value = "";
     document.getElementById('customer-diaChi').value = "";
+    document.getElementById('customer-triGiaHoaDon').value = "";
 }
 
 
@@ -247,7 +248,7 @@ const renderEmployees = () => {
             </td>
         </tr>
         `;
-    })
+    }).join('');
     
     // Append the generated HTML to the table body
     document.querySelector('#employeeTableContent tbody').innerHTML = employeesHTML;
@@ -401,7 +402,7 @@ const renderStudents = () => {
             </td>
         </tr>
         `;
-    })
+    }).join('');
     
     // Append the generated HTML to the table body
     document.querySelector('#studentTableContent tbody').innerHTML = studentsHTML;
