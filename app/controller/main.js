@@ -286,9 +286,9 @@ window.updateEmployeeInfo = (employeeCode) => {
         document.getElementById('employee-code').disabled = true;
         document.getElementById('employee-email').value = employee.email;
         document.getElementById('employee-hoTen').value = employee.hoTen;
-        document.getElementById('employee-tenCongTy').value = employee.tenCongTy;
         document.getElementById('employee-diaChi').value = employee.diaChi;
-        document.getElementById('employee-triGiaHoaDon').value = employee.triGiaHoaDon;
+        document.getElementById('employee-luongTheoNgay').value = employee.luongTheoNgay;
+        document.getElementById('employee-soNgayLamViec').value = employee.soNgayLamViec;
     }
 };
 
